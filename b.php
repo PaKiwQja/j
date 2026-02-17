@@ -8,7 +8,7 @@
 <body>
     <h1>ข้อมูลจังหวัด -- ธีรภัทร์ มาตวังแสง (อีคิว)</h1>
 
-    <form method="post" action="">
+    <form method="post" action="" enctype="multipart/form-data">
     ชื่อจังหวัด<input type="text" name="rname" autofocus required><br>
     รูปภาพ<input type="file" name="pimage"><br>
     ชื่อภาค
@@ -20,13 +20,27 @@
         while($data3 = mysqli_fetch_array($rs3)){
             ?>
             <option value="<?php echo $data3['r_id'];?>"><?php echo $data3['r_name'];?></option>
-
     <?php } ?>
     </select><br><br>    
     <button type="submit" name="Submit">บันทึก</button>
     </form>
-    <br>
-    <br>
+    <br><br>
+
+    <?php            
+    if(isset($_POST['Submit'])){
+        include_once("connectdb.php");
+
+        $pname = $_POST['rname'];
+        $rid   = $_POST['r_id'];
+        $ext = pathinfo($_FILES['pimage']['name'], PATHINFO_EXTENSION);
+
+        $sql2 = "INSERT INTO `provinces` VALUES (NULL, '{$pname}','{$ext}','{$rid}')";
+        mysqli_query($conn, $sql2) or die ("insert ไม่ได้");
+        $pic_id = mysqli_insert_id($conn);
+
+        move_uploaded_file($_FILES['pimage']['tmp_name'],"images/".$pic_id.".".$ext);
+    }
+    ?>
 
     <table border="1">
     <tr>

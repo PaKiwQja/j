@@ -30,6 +30,7 @@
     <tr>
         <th>รหัสภาค</th>
         <th>ชื่อภาค</th>
+        <th>ลบ</th>
     </tr>
 
     <?php
@@ -42,6 +43,7 @@
     <tr>
         <td><?php echo $data['r_id'];?></td>
         <td><?php echo $data['r_name'];?></td>
+        <th width="50" align="center"><a href="delete_region.php?id=<?php echo $data['r_id'];?>"onClick="return confirm('ยืนยันการลบ?')"><img src="images/delete.jfif" width="20"></th>
     </tr>
     <?php } ?>
     </table>
